@@ -44,12 +44,28 @@ public class userscript : MonoBehaviour
         float x = xposition;
         float y = yposition;
 
-        x *= 0.66f;
-        y *= 0.66f;
+        x = xposition - 3.5f;
+        y = 3.5f - yposition;
 
-        x += -2.3f;
-        y += -2.3f;
+        this.transform.position = new Vector3(x, y, -1.0f);
+    }
 
-        this.transform.position = new Vector3(x,y,-1.0f);
+
+    public int getxposition()
+    {
+        return xposition;
+    }
+    public int getyposition()
+    {
+        return yposition;
+    }
+
+    public void setxposition(int x)
+    {
+        xposition = x;
+    }
+    public void setyposition(int y)
+    {
+        yposition = y;
     }
 }
