@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1154121509617916470}
   - component: {fileID: 2289642004079240532}
+  - component: {fileID: -6993705909550285540}
   m_Layer: 0
   m_Name: piece
   m_TagString: Untagged
@@ -84,3 +85,29 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-6993705909550285540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3361986649032286536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb6bd2df82f7e4045a08f1fa1a8f782c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  control: {fileID: 0}
+  movepiece: {fileID: 0}
+  whiteking: {fileID: 21300000, guid: cbb2b5ab85323a94eb45754798ea1a3c, type: 3}
+  whitequeen: {fileID: 21300000, guid: 3bf078c5a48016347aecf177ea3ed7ae, type: 3}
+  whiteknight: {fileID: 21300000, guid: 9c64662738611f14884aed22dee3c508, type: 3}
+  whitebishop: {fileID: 21300000, guid: f36212b57bca04b46b118f18cf8bfeea, type: 3}
+  whiterook: {fileID: 21300000, guid: d3fc53f93c04e6149bc9a5b1d3641339, type: 3}
+  whitepawn: {fileID: 21300000, guid: 117f60bf02aebb14c9dc5d409f83d6b5, type: 3}
+  blackking: {fileID: 21300000, guid: 89b8cfc80eaa09f46822a3e87f91fa4e, type: 3}
+  blackqueen: {fileID: 21300000, guid: 1f951bc88280c4148a0900dcc6e2c807, type: 3}
+  blackknight: {fileID: 21300000, guid: b88f4b0bfef45dd4d8335e6850733d92, type: 3}
+  blackbishop: {fileID: 21300000, guid: 7cd915b9d4442c249a86e7e50b6cbf16, type: 3}
+  blackrook: {fileID: 21300000, guid: 9a219283fc5285444b8da3e36d5afe54, type: 3}
+  blackpawn: {fileID: 21300000, guid: 4a302460bb08dff40b597a0b417ce82d, type: 3}
