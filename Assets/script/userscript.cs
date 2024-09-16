@@ -74,4 +74,30 @@ public class userscript : MonoBehaviour
     {
         yposition = y;
     }
+
+    private void OnMouseUp()
+    {
+        // 기존 이동가능 moveplate 삭제
+        destroymoveplates();
+        // 새로운 moveplate 생성
+        //initiatemoveplates();
+    }
+
+    public void destroymoveplates()
+    {
+        // moveplate를 찾아와 배열로 반환
+        GameObject[] moveplates = GameObject.FindGameObjectsWithTag("moveplate");
+        // 모두 삭제
+        for(int i = 0; i < moveplates.Length; i++)
+        {
+            Destroy(moveplates[i]);
+        }
+    }
+
+    /*public void initiatemoveplates()
+    {
+        switch(this.name)
+        {
+        }
+    }*/
 }
