@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class Game : MonoBehaviour
 {
     // 기물 변수
@@ -99,5 +100,41 @@ public class Game : MonoBehaviour
             return false;
         }
         return true;
+    }
+
+    // 현재 플레이어(검정,흰색) 반환
+    public string getcurrentplayer()
+    {
+        return currentplayer;
+    }
+
+    // 체크메이트 확인 함수
+    public bool gameover()
+    {
+        return checkmate;
+    }
+
+    // 턴 전환 함수
+    public void nextturn()
+    {
+        if(currentplayer == "white")
+        {
+            currentplayer = "black";
+        }
+        else
+        {
+            currentplayer = "white";
+        }
+    }
+    
+    private void Update()
+    {
+        //Debug.Log(currentplayer);
+        if(checkmate == true && Input.GetMouseButtonDown(0))
+        {
+            checkmate = false;
+
+            SceneManager.LoadScene("game");
+        }
     }
 }
