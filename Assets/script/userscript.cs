@@ -196,6 +196,8 @@ public class userscript : MonoBehaviour
         pointmoveplate(xposition + 1, yposition - 1);
         pointmoveplate(xposition - 1, yposition + 1);
         pointmoveplate(xposition - 1, yposition - 1);
+
+        castlingmoveplate();
     }
 
     // 일직선형이 아닌 특정 점으로 이동하는 로직 구현
@@ -222,7 +224,7 @@ public class userscript : MonoBehaviour
     {
         Game sc = control.GetComponent<Game>();
 
-        // 흰색 폰과 검정색 폰의 이동 및 공격 로직을 분리합니다.
+        // 흰색 폰,검정 폰 로직 분리.
         if (player == "white")
         {
             // 1칸 전진 (전방에 기물이 없어야 함)
@@ -235,7 +237,8 @@ public class userscript : MonoBehaviour
             if (firstmove)
             {
                 // 두 칸 전진 가능 여부 확인
-                if (sc.positiononboard(x, y + 1) && sc.getposition(x, y + 1) == null)
+                if (sc.positiononboard(x, y + 1) && sc.getposition(x, y + 1) == null &&
+                    sc.positiononboard(x, y) && sc.getposition(x, y) == null)
                 {
                     moveplatespawn(x, y + 1); // 2칸 전진
                 }
@@ -267,7 +270,8 @@ public class userscript : MonoBehaviour
             if (firstmove)
             {
                 // 두 칸 전진 가능 여부 확인
-                if (sc.positiononboard(x, y - 1) && sc.getposition(x, y - 1) == null)
+                if (sc.positiononboard(x, y - 1) && sc.getposition(x, y - 1) == null &&
+                    sc.positiononboard(x, y) && sc.getposition(x, y) == null)
                 {
                     moveplatespawn(x, y - 1); // 2칸 전진
                 }
@@ -288,6 +292,42 @@ public class userscript : MonoBehaviour
             }
         }
     }
+
+    public void castlingmoveplate()
+{
+    Game sc = control.GetComponent<Game>();
+
+    // 킹사이드 캐슬링
+    if (firstmove)
+    {
+        // 오른쪽 캐슬링: 킹과 룩 사이에 기물이 없어야 함
+        if (sc.positiononboard(xposition + 1, yposition) && sc.getposition(xposition + 1, yposition) == null &&
+            sc.positiononboard(xposition + 2, yposition) && sc.getposition(xposition + 2, yposition) == null)
+        {
+            // 룩이 첫 번째로 움직인 적이 없어야 함
+            GameObject rook = sc.getposition(xposition + 3, yposition);
+            if (rook != null && rook.name.Contains("rook") && rook.GetComponent<userscript>().firstmove)
+            {
+                // 룩 위치에 moveplate 생성
+                moveplatespawn(xposition + 2, yposition);
+            }
+        }
+
+        // 퀸사이드 캐슬링
+        if (sc.positiononboard(xposition - 1, yposition) && sc.getposition(xposition - 1, yposition) == null &&
+            sc.positiononboard(xposition - 2, yposition) && sc.getposition(xposition - 2, yposition) == null &&
+            sc.positiononboard(xposition - 3, yposition) && sc.getposition(xposition - 3, yposition) == null)
+        {
+            // 룩이 첫 번째로 움직인 적이 없어야 함
+            GameObject rook = sc.getposition(xposition - 4, yposition);
+            if (rook != null && rook.name.Contains("rook") && rook.GetComponent<userscript>().firstmove)
+            {
+                // 룩 위치에 moveplate 생성
+                moveplatespawn(xposition - 2, yposition);
+            }
+        }
+    }
+}
 
     public void moveplatespawn(int inputx, int inputy)
     {
