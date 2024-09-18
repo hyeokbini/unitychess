@@ -51,6 +51,12 @@ public class moveplate : MonoBehaviour
 
         // 새 위치에 기물 배치
         controller.GetComponent<Game>().setposition(reference);
+
+        if (reference.name.Contains("pawn") && reference.GetComponent<userscript>().firstmove)
+        {
+            reference.GetComponent<userscript>().firstmove = false; // 첫 이동 이후 firstmove 비활성화
+        }
+
         // 턴 전환 로직 추가
         controller.GetComponent<Game>().nextturn();
         // 기존에 표시됐던 moveplate들 삭제

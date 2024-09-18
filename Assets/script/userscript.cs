@@ -11,6 +11,8 @@ public class userscript : MonoBehaviour
     private int xposition = -1;
     private int yposition = -1;
     private string player;
+    // 폰 두칸 움직인 구현을 위한 변수
+    public bool firstmove = true;
 
     // 스프라이트 이미지 변수
     public Sprite whiteking, whitequeen, whiteknight, whitebishop, whiterook, whitepawn;
@@ -26,18 +28,18 @@ public class userscript : MonoBehaviour
         switch (this.name)
         {
             case "blackqueen": this.GetComponent<SpriteRenderer>().sprite = blackqueen; player = "black"; break;
-            case "blackking": this.GetComponent<SpriteRenderer>().sprite = blackking; player = "black"; break;
-            case "blackrook": this.GetComponent<SpriteRenderer>().sprite = blackrook; player = "black"; break;
+            case "blackking": this.GetComponent<SpriteRenderer>().sprite = blackking; player = "black"; firstmove = true; break;
+            case "blackrook": this.GetComponent<SpriteRenderer>().sprite = blackrook; player = "black"; firstmove = true; break;
             case "blackknight": this.GetComponent<SpriteRenderer>().sprite = blackknight; player = "black"; break;
             case "blackbishop": this.GetComponent<SpriteRenderer>().sprite = blackbishop; player = "black"; break;
-            case "blackpawn": this.GetComponent<SpriteRenderer>().sprite = blackpawn; player = "black"; break;
+            case "blackpawn": this.GetComponent<SpriteRenderer>().sprite = blackpawn; player = "black"; firstmove = true; break;
 
             case "whitequeen": this.GetComponent<SpriteRenderer>().sprite = whitequeen; player = "white"; break;
-            case "whiteking": this.GetComponent<SpriteRenderer>().sprite = whiteking; player = "white"; break;
-            case "whiterook": this.GetComponent<SpriteRenderer>().sprite = whiterook; player = "white"; break;
+            case "whiteking": this.GetComponent<SpriteRenderer>().sprite = whiteking; player = "white"; firstmove = true; break;
+            case "whiterook": this.GetComponent<SpriteRenderer>().sprite = whiterook; player = "white"; firstmove = true; break;
             case "whiteknight": this.GetComponent<SpriteRenderer>().sprite = whiteknight; player = "white"; break;
             case "whitebishop": this.GetComponent<SpriteRenderer>().sprite = whitebishop; player = "white"; break;
-            case "whitepawn": this.GetComponent<SpriteRenderer>().sprite = whitepawn; player = "white"; break;
+            case "whitepawn": this.GetComponent<SpriteRenderer>().sprite = whitepawn; player = "white"; firstmove = true; break;
         }
     }
 
@@ -75,12 +77,13 @@ public class userscript : MonoBehaviour
     {
         yposition = y;
     }
-    
+
     private void OnMouseUp()
     {
         // 게임오버 되지 않았을 때 현재 플레이어가 수를 둘 수 있게 만들기
         if (!control.GetComponent<Game>().gameover() && control.GetComponent<Game>().getcurrentplayer() == player)
         {
+
             // 기존 이동가능 moveplate 삭제
             destroymoveplates();
             // 새로운 moveplate 생성
@@ -219,19 +222,65 @@ public class userscript : MonoBehaviour
     {
         Game sc = control.GetComponent<Game>();
 
-        if (sc.positiononboard(x, y))
+        // 흰색 폰과 검정색 폰의 이동 및 공격 로직을 분리합니다.
+        if (player == "white")
         {
-            if (sc.getposition(x, y) == null)
+            // 1칸 전진 (전방에 기물이 없어야 함)
+            if (sc.positiononboard(x, y) && sc.getposition(x, y) == null)
             {
-                moveplatespawn(x, y);
+                moveplatespawn(x, y); // 폰의 1칸 직진 이동
             }
 
+            // 첫 번째 이동인 경우 2칸 이동 가능 (전방 두 칸 모두 비어있어야 함)
+            if (firstmove)
+            {
+                // 두 칸 전진 가능 여부 확인
+                if (sc.positiononboard(x, y + 1) && sc.getposition(x, y + 1) == null)
+                {
+                    moveplatespawn(x, y + 1); // 2칸 전진
+                }
+            }
+
+            // 오른쪽 대각선 공격
             if (sc.positiononboard(x + 1, y) && sc.getposition(x + 1, y) != null &&
                 sc.getposition(x + 1, y).GetComponent<userscript>().player != player)
             {
                 moveplateattackspawn(x + 1, y);
             }
 
+            // 왼쪽 대각선 공격
+            if (sc.positiononboard(x - 1, y) && sc.getposition(x - 1, y) != null &&
+                sc.getposition(x - 1, y).GetComponent<userscript>().player != player)
+            {
+                moveplateattackspawn(x - 1, y);
+            }
+        }
+        else if (player == "black")
+        {
+            // 1칸 전진 (전방에 기물이 없어야 함)
+            if (sc.positiononboard(x, y) && sc.getposition(x, y) == null)
+            {
+                moveplatespawn(x, y); // 폰의 1칸 직진 이동
+            }
+
+            // 첫 번째 이동인 경우 2칸 이동 가능 (전방 두 칸 모두 비어있어야 함)
+            if (firstmove)
+            {
+                // 두 칸 전진 가능 여부 확인
+                if (sc.positiononboard(x, y - 1) && sc.getposition(x, y - 1) == null)
+                {
+                    moveplatespawn(x, y - 1); // 2칸 전진
+                }
+            }
+
+            // 오른쪽 대각선 공격
+            if (sc.positiononboard(x + 1, y) && sc.getposition(x + 1, y) != null &&
+                sc.getposition(x + 1, y).GetComponent<userscript>().player != player)
+            {
+                moveplateattackspawn(x + 1, y);
+            }
+
+            // 왼쪽 대각선 공격
             if (sc.positiononboard(x - 1, y) && sc.getposition(x - 1, y) != null &&
                 sc.getposition(x - 1, y).GetComponent<userscript>().player != player)
             {
@@ -239,7 +288,6 @@ public class userscript : MonoBehaviour
             }
         }
     }
-
 
     public void moveplatespawn(int inputx, int inputy)
     {

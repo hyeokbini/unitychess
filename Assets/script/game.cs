@@ -18,6 +18,8 @@ public class Game : MonoBehaviour
 
     // 체크메이트 상태
     private bool checkmate = false;
+    // 체크 상태(캐슬링, 킹 움직임, 강제수 구현용도)
+    private bool check = false;
     void Start()
     {
         // 백색 기물 생성
