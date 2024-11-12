@@ -138,6 +138,59 @@ public class Game : MonoBehaviour
             currentplayer = "white";
         }
     }
+
+public bool IsKingInCheck(string player)
+{
+    GameObject king = null;
+
+    // 킹의 위치 찾기
+    for (int x = 0; x < 8; x++)
+    {
+        for (int y = 0; y < 8; y++)
+        {
+            GameObject piece = getposition(x, y);
+            if (piece != null && piece.name == player + "king")
+            {
+                king = piece;
+                break;
+            }
+        }
+        if (king != null) break;
+    }
+
+    if (king == null)
+    {
+        Debug.LogError("King not found for player: " + player);
+        return false;
+    }
+
+    int kingX = king.GetComponent<userscript>().getxposition();
+    int kingY = king.GetComponent<userscript>().getyposition();
+    string opponent = (player == "white") ? "black" : "white";
+
+    // 상대방 기물이 킹의 위치를 공격할 수 있는지 확인
+    for (int x = 0; x < 8; x++)
+    {
+        for (int y = 0; y < 8; y++)
+        {
+            GameObject piece = getposition(x, y); // this.getposition도 가능
+            if (piece != null && piece.GetComponent<userscript>().player == opponent)
+            {
+                userscript script = piece.GetComponent<userscript>();
+
+                // checkForKingThreat 함수 호출로 킹 위치만 확인
+                if (script.checkForKingThreat(kingX, kingY))
+                {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+
+
     
     private void Update()
     {
