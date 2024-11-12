@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class Game : MonoBehaviour
 {
+    // 초기 ui
+    public GameObject startui;
     // 기물 변수
     public GameObject chesspiece;
     // 기물의 위치를 저장할 2차원 배열
@@ -15,12 +17,20 @@ public class Game : MonoBehaviour
 
     // 현재 플레이어 차례(초기값 white)
     private string currentplayer = "white";
+    // 게임 시작 여부
+    private bool isgamestart = false;
 
     // 체크메이트 상태
     private bool checkmate = false;
     // 체크 상태(캐슬링, 킹 움직임, 강제수 구현용도)
     private bool check = false;
     void Start()
+    {
+        startui.SetActive(true);
+        isgamestart = false;
+    }
+
+    void startgame()
     {
         // 백색 기물 생성
         whiteplayer = new GameObject[]
@@ -131,6 +141,12 @@ public class Game : MonoBehaviour
     
     private void Update()
     {
+        if(!isgamestart && Input.GetMouseButtonDown(0))
+        {
+            startui.SetActive(false);
+            isgamestart = true;
+            startgame();
+        }
         //Debug.Log(currentplayer);
         if(checkmate == true && Input.GetMouseButtonDown(0))
         {

@@ -25,21 +25,21 @@ public class userscript : MonoBehaviour
         // 기물 위치 설정
         SetCoords();
         // 이름에 따른 스프라이트 이미지 설정
-        switch (this.name)
+        switch (name)
         {
-            case "blackqueen": this.GetComponent<SpriteRenderer>().sprite = blackqueen; player = "black"; break;
-            case "blackking": this.GetComponent<SpriteRenderer>().sprite = blackking; player = "black"; firstmove = true; break;
-            case "blackrook": this.GetComponent<SpriteRenderer>().sprite = blackrook; player = "black"; firstmove = true; break;
-            case "blackknight": this.GetComponent<SpriteRenderer>().sprite = blackknight; player = "black"; break;
-            case "blackbishop": this.GetComponent<SpriteRenderer>().sprite = blackbishop; player = "black"; break;
-            case "blackpawn": this.GetComponent<SpriteRenderer>().sprite = blackpawn; player = "black"; firstmove = true; break;
+            case "blackqueen": GetComponent<SpriteRenderer>().sprite = blackqueen; player = "black"; break;
+            case "blackking": GetComponent<SpriteRenderer>().sprite = blackking; player = "black"; firstmove = true; break;
+            case "blackrook": GetComponent<SpriteRenderer>().sprite = blackrook; player = "black"; firstmove = true; break;
+            case "blackknight": GetComponent<SpriteRenderer>().sprite = blackknight; player = "black"; break;
+            case "blackbishop": GetComponent<SpriteRenderer>().sprite = blackbishop; player = "black"; break;
+            case "blackpawn": GetComponent<SpriteRenderer>().sprite = blackpawn; player = "black"; firstmove = true; break;
 
-            case "whitequeen": this.GetComponent<SpriteRenderer>().sprite = whitequeen; player = "white"; break;
-            case "whiteking": this.GetComponent<SpriteRenderer>().sprite = whiteking; player = "white"; firstmove = true; break;
-            case "whiterook": this.GetComponent<SpriteRenderer>().sprite = whiterook; player = "white"; firstmove = true; break;
-            case "whiteknight": this.GetComponent<SpriteRenderer>().sprite = whiteknight; player = "white"; break;
-            case "whitebishop": this.GetComponent<SpriteRenderer>().sprite = whitebishop; player = "white"; break;
-            case "whitepawn": this.GetComponent<SpriteRenderer>().sprite = whitepawn; player = "white"; firstmove = true; break;
+            case "whitequeen": GetComponent<SpriteRenderer>().sprite = whitequeen; player = "white"; break;
+            case "whiteking": GetComponent<SpriteRenderer>().sprite = whiteking; player = "white"; firstmove = true; break;
+            case "whiterook": GetComponent<SpriteRenderer>().sprite = whiterook; player = "white"; firstmove = true; break;
+            case "whiteknight": GetComponent<SpriteRenderer>().sprite = whiteknight; player = "white"; break;
+            case "whitebishop": GetComponent<SpriteRenderer>().sprite = whitebishop; player = "white"; break;
+            case "whitepawn": GetComponent<SpriteRenderer>().sprite = whitepawn; player = "white"; firstmove = true; break;
         }
     }
 
@@ -55,7 +55,7 @@ public class userscript : MonoBehaviour
         y -= 3.5f;
 
         // 위치 재설정
-        this.transform.position = new Vector3(x, y, -1.0f);
+        transform.position = new Vector3(x, y, -1.0f);
     }
 
     // x,y 좌표 리턴
@@ -107,7 +107,7 @@ public class userscript : MonoBehaviour
     // 기물 움직이기 로직
     public void initiatemoveplates()
     {
-        switch (this.name)
+        switch (name)
         {
             case "blackqueen":
             case "whitequeen":
@@ -207,7 +207,7 @@ public class userscript : MonoBehaviour
         if (sc.positiononboard(x, y))
         {
             GameObject cp = sc.getposition(x, y);
-
+            
             if (cp == null)
             {
                 moveplatespawn(x, y);
